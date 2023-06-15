@@ -9,7 +9,7 @@ components= {
     cart = {}
     mysql = {}
     shipping = {}
-    rabitmq = {}
+    rabbitmq = {}
     payment = {} 
 
 }
