@@ -79,3 +79,54 @@ vpc = {
 
 default_vpc_id = "vpc-0204835e11042bbf4"
 default_vpc_rt = "rtb-0ee6ac2814dcf2bf6"
+allow_ssh_cidr = ""
+#we need to give workstation ip address in allow_ssh_cidr
+zone_id = ""
+# we have to provide route53 zone id in above code
+kms_key_id = ""
+# we have to provide kms key above
+kms_key_arn = ""
+
+
+rabbitmq = {
+    main = {
+        component = "rabbitmq"
+        instance_type = "t3.small"
+
+    }
+}
+
+rds = {
+    main = {
+        component = "mysql"
+        engine = "aurora-mysql"
+        engine_version = "5.7.mysql_aurora.2.11.3"
+        database_name = "dummy"
+        instance_count = 1
+        instance_class = "db.t3.small"
+
+    }
+}
+
+documentdb = {
+    main = {
+        component = "docdb"
+        engine = "docdb"
+        engine_version = "4.0.0"
+        db_instance_count = 1
+        instance_class = "db.t3.medium"
+
+    }
+}
+
+elasticcache = {
+    main = {
+        component = "elasticcache"
+        engine = "redis"
+        engine_version = "6.x"
+        replica_for_node_group = 1
+        num_node_groups = 1
+        node_type = "cache.t3.micro"
+        parameter_group_name = "default.redis3.2.cluster.on"
+    }
+}
