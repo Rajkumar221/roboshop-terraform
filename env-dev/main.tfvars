@@ -1,38 +1,38 @@
 env = "dev"
 
-components= {
-    frontend = {
-        tags = {monitor = "true", env = "dev"}
-    }
-    mongodb = {
-        tags = { env = "dev"}
-    }
-    catalogue = {
-        tags = {monitor = "true", env = "dev"}
-    }
-    redis = {
-        tags = { env = "dev"}
-    }
-    user = {
-        tags = {monitor = "true", env = "dev"}
-    }
-    cart = {
-        tags = {monitor = "true", env = "dev"}
-    }
-    mysql = {
-        tags = { env = "dev"}
-    }
-    shipping = {
-        tags = {monitor = "true", env = "dev"}
-    }
-    rabbitmq = {
-        tags = { env = "dev"}
-    }
-    payment = {
-        tags = {monitor = "true", env = "dev"}
-    } 
+# components= {
+#     frontend = {
+#         tags = {monitor = "true", env = "dev"}
+#     }
+#     mongodb = {
+#         tags = { env = "dev"}
+#     }
+#     catalogue = {
+#         tags = {monitor = "true", env = "dev"}
+#     }
+#     redis = {
+#         tags = { env = "dev"}
+#     }
+#     user = {
+#         tags = {monitor = "true", env = "dev"}
+#     }
+#     cart = {
+#         tags = {monitor = "true", env = "dev"}
+#     }
+#     mysql = {
+#         tags = { env = "dev"}
+#     }
+#     shipping = {
+#         tags = {monitor = "true", env = "dev"}
+#     }
+#     rabbitmq = {
+#         tags = { env = "dev"}
+#     }
+#     payment = {
+#         tags = {monitor = "true", env = "dev"}
+#     } 
 
-}
+# }
 
 tags = {
     company_name = "XYZ Tech"
@@ -63,7 +63,7 @@ tags = {
 #     }
 # }
 
-# we can write the above code like above also
+# we can write the below code like above also
 vpc = {
     main ={
         cidr_block = "10.0.0.0/16"
@@ -129,4 +129,91 @@ elasticcache = {
         node_type = "cache.t3.micro"
         parameter_group_name = "default.redis3.2.cluster.on"
     }
+}
+
+alb = {
+    public = {
+        name = "public"
+        internal = false
+        load_balancer_type = "application"
+        subnet_ref = "public"
+    }
+    private = {
+        name = "private"
+        internal = true
+        load_balancer_type = "application"
+        subnet_ref = "private"
+
+    }
+}
+
+apps = {
+    cart = {
+        component = "cart"
+        app_port = 8080
+        instance_type = "t3.small"
+        desired_capacity = 1
+        max_size = 1
+        min_size = 1
+        subnet_ref = "app"
+        lb_ref = "private"
+        lb_rule_priority = 100
+    }
+    catalogue = {
+        component = "catalogue"
+        app_port = 8080
+        instance_type = "t3.small"
+        desired_capacity = 1
+        max_size = 1
+        min_size = 1
+        subnet_ref = "app"
+        lb_ref = "private"
+        lb_rule_priority = 101
+        extra_param_access = "docdb_arn"
+    user = {
+        component = "user"
+        app_port = 8080
+        instance_type = "t3.small"
+        desired_capacity = 1
+        max_size = 1
+        min_size = 1
+        subnet_ref = "app"
+        lb_ref = "private"
+        lb_rule_priority = 102
+        extra_param_access = "docdb_arn"
+    }
+    shipping = {
+        component = "shipping"
+        app_port = 8080
+        instance_type = "t3.small"
+        desired_capacity = 1
+        max_size = 1
+        min_size = 1
+        subnet_ref = "app"
+        lb_ref = "private"
+        lb_rule_priority = 103
+    }
+    payment = {
+        component = "payment"
+        app_port = 8080
+        instance_type = "t3.small"
+        desired_capacity = 1
+        max_size = 1
+        min_size = 1
+        subnet_ref = "app"
+        lb_ref = "private"
+        lb_rule_priority = 104
+    }
+    frontend = {
+        component = "frontend"
+        app_port = 80
+        instance_type = "t3.small"
+        desired_capacity = 1
+        max_size = 1
+        min_size = 1
+        subnet_ref = "web"
+        lb_ref = "public"
+        lb_rule_priority = 100
+    }
+}
 }
