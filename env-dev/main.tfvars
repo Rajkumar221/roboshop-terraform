@@ -86,6 +86,7 @@ zone_id = ""
 kms_key_id = ""
 # we have to provide kms key above
 kms_key_arn = ""
+allow_prometheus_cidr = ""
 
 
 rabbitmq = {
